@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <style>
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+            inline-size: 200px;
+        }
+        .product img {
+            max-inline-size: 100%;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1> Shop Deports </h1>
+    <a href="{{ url_for('add_product') }}">Agregar Nuevo Producto</a>
+    <div id="products">
+        {% for product in products %}
+        <div class="product">
+            <h2>{{ product.name }}</h2>
+            <p>Precio: ${{ product.price }}</p>
+            <p>Categoría: {{ product.category }}</p>
+            <p>Stock: {{ product.stock }}</p>
+            <p>Año: {{ product.year }}</p>
+            <img src="{{ url_for('images', filename=product.imgFrontUrl) }}" alt="{{ product.name }} Front">
+            <img src="{{ url_for('images', filename=product.imgBackUrl) }}" alt="{{ product.name }} Back">
+            <br>
+            <a href="{{ url_for('edit_product', id=product._id) }}">Editar</a>
+            <form action="{{ url_for('delete_product', id=product._id) }}" method="post" style="display:inline;">
+                <button type="submit">Eliminar</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
